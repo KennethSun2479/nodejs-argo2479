@@ -1,6 +1,5 @@
 name: Build Docker Image (new)
 
-
 on:
   push:
     branches: [ main ]
@@ -8,8 +7,10 @@ on:
       - 'Dockerfile'
       - 'index.js'
       - 'package.json'
+
   pull_request:
     branches: [ main ]
+
   workflow_dispatch:
 
 jobs:
@@ -34,19 +35,20 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
-  uses: docker/build-push-action@v5
-  with:
-    context: .
-    push: true
-    platforms: linux/amd64,linux/arm64
-    tags: |
-      ghcr.io/kennethsun2479/kenneth:test
-    labels: |
-      org.opencontainers.image.source=https://github.com/${{ github.repository }}
-      org.opencontainers.image.description=HTTP Server
-      org.opencontainers.image.licenses=MIT
-    cache-from: type=gha
-    cache-to: type=gha,mode=max
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ghcr.io/kennethsun2479/kenneth:test
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.description=HTTP Server
+            org.opencontainers.image.licenses=MIT
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
 
 
 
